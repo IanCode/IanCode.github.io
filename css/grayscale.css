@@ -142,6 +142,7 @@ a {
   padding-top: 100px; }
 
 .download-section {
+  display: flex;
   width: 100%;
   padding: 50px 0;
   color: white;
