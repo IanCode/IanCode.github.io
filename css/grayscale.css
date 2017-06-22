@@ -143,7 +143,7 @@ a {
 
 .download-section {
   display: flex;
-  width: 100%;
+  min-width: 100%;
   padding: 50px 0;
   color: white;
   background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
