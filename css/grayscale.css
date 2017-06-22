@@ -92,9 +92,9 @@ a {
           color: white; } }
 
 .masthead {
-  display: table;
+  display: flex;
   width: 100%;
-  min-width: 100em;
+  min-width: 10000em;
   height: auto;
   padding: 100px 0;
   text-align: center;
