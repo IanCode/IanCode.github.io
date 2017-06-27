@@ -1,0 +1,247 @@
+<!DOCTYPE_html>
+<html>
+  <head>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <link href="ian.css" rel="stylesheet" type="text/css" media="all" />
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+  <title>Weekly Update: Week 2</title>
+
+  <h1 class="z-depth-4" style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px">Weekly Update: Week 2</h1>
+
+
+    <h2 class="z-depth-4" style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px">
+      Structure of Code
+    </h2>
+    <h3 style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px" class="z-depth-4">
+      types of bytes
+    </h3>
+    <p>int value of 0 will represent a 0-fill byte</p>
+    <p>int value of 1 will represent a 1-fill byte</p>
+    <p>int value of 2 will represent a odd literal byte</p>
+    <p>int value of 3 will represent a messy literal byte</p>
+
+    <h3 style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px" class="z-depth-4">
+      structs to use
+    </h3>
+    <p>based off of the struct used for WAH and VAL we will make a similar blockSeg struct but based around bytes instead of 32-bit words</p>
+    <p>We could use a similar name, such as "struct BBCseg". The struct would contain: 
+    <ul>
+      <li>Header byte of the current run. The header contains important information, which we can extract:</li>
+      <ul>
+        <li>Fill length</li>
+        <li>Tail length</li>
+        <li>Run type</li>
+      </ul>
+      <li>Pointer to next block</li>
+      <li>Pointer to file containing compressed data</li>
+      <li>current (uncompressed) byte</li>
+      <li>current (uncompressed) byte type (as described above)</li>
+    </ul>
+    </p>
+
+
+
+    <h3 class="z-depth-4" style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px">
+      where and what to add
+    </h3>
+    <p>Have to add or use loop in RawBitmapReader.c to include a call to our bbc</p>
+    <p>Add bbc section to control.h</p>
+    <p>BBCCompressor.c (where we will implement the BBC algorithm)</p>
+    <p>BBCCompressor.h </p>
+    <p>
+
+
+ <h2>
+      Psuedo Code for BBC
+    </h2>
+    <p>
+    <p>get next byte from raw seq</p>
+    <p>determine type of byte</p>
+    <p>call header byte or lastByte</p>
+    <p>
+      update header byte
+      <p>
+        update fill length
+        update tail length
+      </p>
+      change type of run
+      end run
+    </p>
+    <p>if byte is new head or literal</p>
+    <p>
+      <p>add to bbc</p>
+    </p>
+    </p>
+
+
+    <h2 class = "z-depth-4" style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px"> 
+    Revisited Pseudo Code 
+    </h2>
+
+  
+  <pre class="prettyprint" style="margin-right: 20px; margin-left: 20px">
+/**Revisted Psudeo Code**/
+#include &lt;stdio.h&gt;
+
+while(get next byte)
+
+  char next_byte= getNextByte()
+
+  int next = getType(next_byte)
+  //these methods gather information from the header
+  //default to type 1 run
+  fill_len = getFill();
+  tail_len = getTail();
+  //Run Types (as Described in our documentation and BBC paper)
+  //'0' = TYPE_1
+  //'1' = TYPE_2
+  //'2' = TYPE_3
+  //'3' = TYPE_4
+  run_type = getHeadType(); //can also be "4" (or something....) to represent a new run
+  //New run:
+  //0 not new run
+  //1 new run
+  new_run = isNewRun(); //TRUE or FALSE
+  fill_byte = getFillByte(); //either ZERO_FILL or ONE_FILL 00000000 or 11111111
+
+/**
+***FUNCTION DOCUMENTATION***
+      //increases the tail length in the header and concatenates the messy literal bit to the tail of the run
+      //@param char next_byte The literal byte to be concatenated
+      incrementTail(char next_byte)
+
+      //increments the fill length in the header
+      incrementFill();
+
+      //changes the current header type to the desired header type
+      changeHeaderType(int type);
+
+      //increments the counter bytes in a type 2 or type 4 run
+      incrementCounterByte();
+
+      //sets new_run to TRUE and sets header to blank type 1 run (10000000)
+      startNewRun();
+
+*/
+
+  //0-fill byte or 1-fill byte (11111111 or 00000000)
+  if(next == 0 || next == 1)
+
+    if(new_run)
+
+      if(next == 0)
+        setFillBit(0);
+
+      else
+        setFillBit(1);
+
+      new_run == 0;
+
+    if(next == fill_byte)
+
+      if(run_type == TYPE_1)
+
+        if(fill_len < 3)
+          incrementFill();
+
+        else
+          //change to type 3 run
+          //COMPLICATED!!
+          //changeHeaderType(int type)
+          chageHeaderType(TYPE_3);
+
+      else if(run_type = TYPE_3)
+        //increment the counter byte somehow
+        //COMPLICATED!! (need more overhead)
+        incrementCounterByte();
+
+    else
+      startNewRun();
+
+
+  //odd byte (Eg: 00010000)
+  if(next==2)
+    if(new_run)
+      changeHeaderType(TYPE_2);
+      placeOddBit(next_byte);
+      new_run == 0;
+
+    if(tail_length > 0) //end the current run and make a new type 2 run
+      makeOddHeader(next_byte);
+      startNewRun();
+      //end current run and create a new type 2 run holding just the odd byte
+
+    if(run_type == TYPE_1)
+      changeHeaderType(TYPE_2);
+      placeOddBit(next_byte);
+
+    if(run_type == TYPE_3)
+      changeHeaderType(TYPE_4);
+      placeOddBit(next_byte);
+
+
+  //messy byte (Eg: 11010100)
+  if(next==3)
+
+    if(new_run) 
+      //start a new type 1 run
+      //this method increases the tail length bit in the header and concatenates the messy literal bit to the tail
+      incrementTail(next_byte);
+      new_run == 0;
+
+    else if(run_type == TYPE_1)
+
+      if(tail_length<span class="pln"><span class="str">&lt;</span></span>15)
+
+        incrementTail(next_byte);
+
+      else
+
+        incrementTail(next_byte);
+
+    else if(run_type == TYPE_3)
+
+      if(tail_length<span class="pln"><span class="str">&lt;</span></span>15)
+
+        incrementTail(next_byte);
+        startNewRun();
+
+      else
+
+        incrementTail(next_byte);
+        startNewRun();
+      </pre>
+
+
+
+
+
+    <h2 class="z-depth-4" style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px">
+    Questions and Concerns:
+    </h2>
+      <p>
+        <ul>
+        <li>Suppose we have a long tail of messy bits, then we come across an odd byte.
+        Should we append the odd byte to the tail, or start a new type 2 or 4 run to 
+        contain the single odd bit? Possible overhead concerns with implementing this special
+        case vs. the rarity of the special case given sparse data.</li>
+        <li>Suppose we are a shooting star. <a href = "shooting_star.html">Then What?</a></li>
+        </ul>
+      </p>
+  </body>
+</html>
