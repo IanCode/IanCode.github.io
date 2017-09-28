@@ -55,27 +55,114 @@
     </h2>-->
 
     <h3 class="z-depth-2" style = "margin-bottom: 20px">
-     Code Outline
+     Basic Progress
     </h3>
     <div class="z-depth-2" style = "padding-top: 20px; padding-bottom: 20px; font-family: 'Josefin Sans', sans-serif; text-align: center; font-size: 1.15em">
-    <p>Got our code running! (sucessfully compressed some bytes)</p>
-    <p>Successfully created several tests</p>
-    <p>Using HxD hex editor on Windows to verify output, and wxHexEditor on Ubuntu</p>
-    <p>We needed to restructure some of our code and add some additional variables to make sure edge cases didn't break the program every time</p>
-    <p>As of now, we believe the algorithm is fully functional./p>
+    <p></p>
+    <p>We have created some basic finite state machines, established some principles of querying, and also developed some necessary variables and functions that we will need to implement in our code. Our finite state machines aren't complete as of yet since they we came across new realizations partway through the process of making them.</p>
+    <p>Goals:</p>
+    <ul>
+    <li>Finish finite state machines</li>
+    <li>Finish code integration</li>
+    <li>Begin with basic pseudocode</li>
     </div>
     <h3 class="z-depth-2" style = "margin-bottom: 20px">
-    To Do:
+    Code Outline
     </h3>
-    <div class="z-depth-2" style = "padding-left: 20px; padding-top: 20px; padding-bottom: 20px; font-family: 'Josefin Sans', sans-serif; text-align: left;"">
-    <p>
-    <ul>
-    <li>Finish integrating into Alexia's code (as of now we run from our own test main file)</li>
-    <li>Querying? (working remotely?)</li>
-    <li>Setup independent study: querying background, finite state machine (4-5 weeks), converting to pseudocode, (testing and implementing for the rest of the time. (10 weeks). Weekly updates. Possible extensions- develop our own thing. </li>
-    </ul>
-    </p>
+    <div class="z-depth-2" style = "padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px; font-family: 'Josefin Sans', sans-serif; text-align: left;"">
+    <p>Below is a basic outline of some of the variables, functions, and functionality we will be needing in our querying program.</p>
+    <pre class="prettyprint">
+    bbcQuery(col_1, col_2, op){
+    //these are parameters to be used in our query engine. 
+    //They keep track of various bytes, properties, headers, etc.
+    char *col_1
+    char *col_2
+    curr_byte1
+    curr_byte2
+    curr_run1
+    curr_run2
+
+    //find smaller of these when comparing fills
+    fill_len1
+    fill_len2
+
+    //if either tail length is 0, get the next header/run
+    tail_len1
+    tail_len2
+    fill_bit1
+    fill_bit2
+
+    //in general, find the smaller of these, loop over this length
+    run_size1
+    run_size2
+    odd_pos_1
+    odd_pos_2
+    
+    //below are some of the basic functions for bitwise operations we will be using. 
+    //Hopefully somewhat self-explanatory
+
+    BBCQuery(col1, col2, Op, Size)
+        readHeader(struct util, col1[0])
+        readheader(struct util, col2[0])
+        if(op=='and')
+            AndBBC()
+        else if(op=='or')
+            OrBBC()
+    
+    readHeader()
+    readType1()
+    readType2()
+    readType3()
+    readType4()
+
+
+    AndBBC()
+    char fillAndFill()
+    char fillAndTail()
+    char tailAndTail()
+
+    OrBBC()
+    //basic outline for the fillOrFill function. This is very much pseudo-code!
+    char fillOrFill(){
+        if(fill_bit1 == fill_bit2)
+            if(fill_len1 <= fill_len2)
+                toAdd = fill_len1*fill_bit1;
+                result.add(toAdd);
+            else
+                toAdd = fill_len2*fill_bit1;
+                result.add(toAdd);
+        else if(fill_bit1 != fill_bit2)
+            if(fill_len1 <= fill_len2)
+                toAdd = fill_len1*1;
+            else 
+                toAdd = fill_len2*1;
+            result.add(toAdd);
+    }
+    char fillOrTail()
+    char tailOrTail()
+
+
+    </pre>
+    <p>Necessary Cases:</p>
+    <p>Type 1 to Type 1</p>
+    <p>Type 2 to Type 2</p>
+    <p>Type 3 to Type 3</p>
+    <p>Type 4 to Type 4</p>
+    <p>Type 1 to Type 2</p>
+    <p>Type 1 to Type 3</p>
+    <p>Type 1 to Type 4</p>
+    <p>Type 2 to Type 3</p>
+    <p>Type 2 to Type 4</p>
+    <p>Type 3 to Type 4</p>
+    <p>Each of these cases may need a finite state machine in order to make sense of the complexities of the case.</p>
     </div>
+    <h3 class="z-depth-2" style = "margin-bottom: 20px">
+    Todo
+    </h3>
+    <div class="z-depth-2" style = "padding-top: 20px; padding-bottom: 20px; font-family: 'Josefin Sans', sans-serif; text-align: center; font-size: 1.15em">
+    Generate Compressed Output
+    </div>
+
   </body>
   </div>
 </html>
