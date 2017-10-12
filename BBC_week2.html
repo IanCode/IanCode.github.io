@@ -20,16 +20,30 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
 
   <title>Weekly Update: Week 2</title>
-
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="BBC_week1.html">Week 1</a></li>
+  <li><a href="BBC_week2.html">Week 2</a></li>
+  <li class="divider"></li>
+  <li><a href="BBC_Week3.html">Week 3</a></li>
+  <li><a href="BBC_week5.html">Weeks 4-5</a></li>
+  <li><a href="BBC_Query_Basics.html">Querying Intro</a></li>
+  <li><a href="BBC_Query_Mid.html">Querying Process</a></li>
+</ul>
+<nav>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">BBC</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="https://github.com/IanCode">Ian's Github</a></li>
+      <li><a href="https://github.com/pjryan513">Patrick's Github</a></li>
+      <!-- Dropdown Trigger -->
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Week List<i class="material-icons right"></i></a></li>
+    </ul>
+  </div>
+  <script>$(".dropdown-button").dropdown();</script>     
+</nav>
   <div class="container">
   <!--h1 class="z-depth-4" style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px"></h1-->
-
-  <nav class="z-depth-4">
-    <div class="nav-wrapper" style="background-color: #48C9B0; text-align: center;
-  /**font-family: 'Indie Flower', cursive;*/font-family: 'Josefin Sans', sans-serif; 
-  color: black">
-  Weekly Update: Week 2</div>
-    </nav>
 
 
     <h2 class="z-depth-4" style = "margin-right: 20px; margin-left: 20px; margin-bottom: 20px">
@@ -253,6 +267,9 @@ while(get next byte)
         </ul>
       </p>
   </div>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+ <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   </body>
 
 </html>
