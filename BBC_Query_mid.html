@@ -80,7 +80,19 @@
       We're struggling with dealing with compressed vs uncompressed output. In the case of WAH querying 
       one is able to subtract a fill of a certain length if they are of the same type, and this saves a 
       great amount of time. But with BBC, subtracting from fill lengths in the case of equal fills and 
-      incrementing the output fill by this amount doesn't necessarily translate if 
+      incrementing the output fill by this amount doesn't necessarily translate to the output in the same way,
+      and it could just be faster to perform the bitwise operation on every single byte. 
+    </p>
+    <p>
+      Is looking ahead worth it? using 'if' statements could add to time complexity. if we know how long an output
+      fill will be, then it could be less time consuming to perform a single subtraction on two ints than to 
+      bitwise OR a sequence of a thousand or more bytes. Then we can just see how long the fill should be, and copy
+      that length of bytes into the output array. 
+    </p>
+    <p>
+      In the case that looking ahead has no conceivable advantage, then it may not even be necessary to initialize such
+      an elaborate ActiveRun structure. We would still need to know the fill len and tail len, but we wouldn't need
+      some of the extra parameters. 
     </p>
     </div>
 
@@ -89,7 +101,7 @@
             <h3 style = "margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; background-color:  #f7f9f9 ">To Do</h3>
     <p>Review deeper C functionality</p>
     <p>Begin to code actual qerying process</p>
-    <p>We do need compressed output. To this end, decide whether we finish the entire query then compress, or attempt to compress while the query runs. Which is faster? Possible multithreaded implementation options here if we want to compress while the query runs. This will also make it necessary to save the state of our compression algorithm. </p>
+    <p>We need to figure out how to deal with the output. Decide whether we finish the entire query then compress, or attempt to compress while the query runs. Which is faster? Possible multithreaded implementation options here if we want to compress while the query runs. This will also make it necessary to save the state of our compression algorithm. </p>
     </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
  <!-- Compiled and minified JavaScript -->
