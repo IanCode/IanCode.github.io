@@ -76,19 +76,20 @@
     <p>
     How will we fit into her code? Should we do a black-box style, or should we write our own query engine? 
     </p>
+    <p>
+      We're struggling with dealing with compressed vs uncompressed output. In the case of WAH querying 
+      one is able to subtract a fill of a certain length if they are of the same type, and this saves a 
+      great amount of time. But with BBC, subtracting from fill lengths in the case of equal fills and 
+      incrementing the output fill by this amount doesn't necessarily translate if 
+    </p>
     </div>
 
 
     <div class="z-depth-2" style = "padding-bottom: 30px; font-family: 'Josefin Sans', sans-serif; text-align: center; font-size: 1.15em; margin-bottom: 2vh; background-color:  #f7f9f9 ">
             <h3 style = "margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; background-color:  #f7f9f9 ">To Do</h3>
-    <p>Review deeper C functionality
-    </p>
-    <p>Begin to code actual qerying process
-    </p>
-    <p>We do need compressed output. To this end, decide whether we finish the entire query then compress, or attempt to compress while the query runs. Which is faster? Possible multithreaded implementation options here if we want to compress while the query runs. This will also make it necessary to save the state of our compression algorithm. 
-    </p>
-    <p>
-    </p>
+    <p>Review deeper C functionality</p>
+    <p>Begin to code actual qerying process</p>
+    <p>We do need compressed output. To this end, decide whether we finish the entire query then compress, or attempt to compress while the query runs. Which is faster? Possible multithreaded implementation options here if we want to compress while the query runs. This will also make it necessary to save the state of our compression algorithm. </p>
     </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
  <!-- Compiled and minified JavaScript -->
